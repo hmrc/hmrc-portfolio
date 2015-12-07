@@ -12,16 +12,16 @@
 
 	<div class="grid-row">
 		<section class="column-two-thirds">
-			
+
 			<p>{{ data.description }}</p>
-			
+
 			<div class="location">Based in <strong>{{ data.location }}</strong></div>
 
 			<h2 class="heading-medium">Project history</h2>
 			<div class="phase-history">
 				<div class="phase-history-item border-discovery txt-discovery">
 					<h3><a href="#" class="tag tag-history discovery">discovery</a></h3>
-					<p>Completed: Discovery — Sep 2013</p>
+					<p>{{ data.done | default('not set') }}</p>
 				</div>
 				<div class="phase-history-item border-alpha txt-alpha">
 					<h3><a href="#" class="tag tag-history alpha">alpha</a></h3>
@@ -55,12 +55,12 @@
 			<p><a href="{{ data.prototype | default('#') }}">{{ data.prototype | default('http://not.set/') }}</a></p>
 
 			<h3 class="heading-small">Github</h3>
-			<p>The <a href="https://github.com/dwpdigitaltech/dwp-portfolio/blob/master/lib/projects/{{data.filename}}">content for this page</a> is kept on github</p>			
+			<p>The <a href="https://github.com/dwpdigitaltech/dwp-portfolio/blob/master/lib/projects/{{data.filename}}">content for this page</a> is kept on github</p>
 		</section>
 	</div>
-	
 
-	
+
+
 
 </main>
 
