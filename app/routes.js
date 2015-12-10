@@ -3,9 +3,9 @@ var express = require('express'),
     _       = require('underscore');
 
   /*
-    - - - - - - - - - -  INDEX PAGE - - - - - - - - - - 
+    - - - - - - - - - -  INDEX PAGE - - - - - - - - - -
   */
-  router.get('/', function (req, res) 
+  router.get('/', function (req, res)
   {
     var data = _.groupBy(req.app.locals.data, 'theme');
     var newd = {};
@@ -14,14 +14,14 @@ var express = require('express'),
       var item = _.groupBy(value,'phase');
       newd[key] = item;
     });
-    var phases = _.countBy(req.app.locals.data, 'phase');    
-    res.render('index', {"data":newd, "counts":phases, "view":"theme"});  
-  });
+    var phases = _.countBy(req.app.locals.data, 'phase');
+    res.render('index', {"data":newd, "counts":phases, "view":"theme"});
+   console.log(data); });
 
   /*
-    - - - - - - - - - -  LOCATION INDEX PAGE - - - - - - - - - - 
+    - - - - - - - - - -  LOCATION INDEX PAGE - - - - - - - - - -
   */
-  router.get('/location/', function (req, res) 
+  router.get('/location/', function (req, res)
   {
     var data = _.groupBy(req.app.locals.data, 'location');
     var newd = {};
@@ -30,17 +30,17 @@ var express = require('express'),
       var item = _.groupBy(value,'phase');
       newd[key] = item;
     });
-    var phases = _.countBy(req.app.locals.data, 'phase');  
-    res.render('index', {"data":newd, "counts":phases, "view":"location"});  
+    var phases = _.countBy(req.app.locals.data, 'phase');
+    res.render('index', {"data":newd, "counts":phases, "view":"location"});
   });
 
   /*
-    - - - - - - - - - -  PROJECT PAGE - - - - - - - - - - 
+    - - - - - - - - - -  PROJECT PAGE - - - - - - - - - -
   */
-  router.get('/projects/:id/:slug', function (req, res) 
-  {    
+  router.get('/projects/:id/:slug', function (req, res)
+  {
     var data = _.findWhere(req.app.locals.data, {id:parseInt(req.params.id)});
-    res.render('project', {"data":data});  
+    res.render('project', {"data":data});
   });
 
 module.exports = router;
