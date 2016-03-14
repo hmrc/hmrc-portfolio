@@ -15,7 +15,7 @@ var express = require('express'),
       newd[key] = item;
     });
     var phases = _.countBy(req.app.locals.data, 'phase');    
-    res.render('index', {"data":newd, "counts":phases, "view":"theme"});  
+    res.render('index', {"data":newd, "counts":phases, "view":"theme"}); 
   });
 
   /*
@@ -41,6 +41,8 @@ var express = require('express'),
   {    
     var data = _.findWhere(req.app.locals.data, {id:parseInt(req.params.id)});
     res.render('project', {"data":data});  
+
+
   });
 
 module.exports = router;
