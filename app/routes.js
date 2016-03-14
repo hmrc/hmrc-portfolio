@@ -116,8 +116,7 @@ router.get('/location/', function (req, res)
   });
   loc_order.sort();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   /*
     - - - - - - - - - -  PROJECT PAGE - - - - - - - - - - 
   */
@@ -127,9 +126,6 @@ router.get('/location/', function (req, res)
     res.render('project', {"data":data});  
 
 
-=======
-=======
->>>>>>> dwpdigitaltech/master
   var phases = _.countBy(req.app.locals.data, 'phase');
   res.render('index', {
     "data":new_data,
@@ -137,10 +133,7 @@ router.get('/location/', function (req, res)
     "view":"location",
     "theme_order":loc_order,
     "phase_order":phase_order
-<<<<<<< HEAD
->>>>>>> dwpdigitaltech/master
-=======
->>>>>>> dwpdigitaltech/master
+
   });
 });
 
