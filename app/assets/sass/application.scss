@@ -4,9 +4,17 @@
 // Take a look at patterns.scss to see which files are imported.
 @import 'patterns';
 
+#global-header #logo {
+  font-size:16px;line-height:1.8;padding-left:5px;
+  @media (min-width:480px) {font-size:19px; line-height:30px}
+  @media (min-width:640px) {font-size:24px; }
+  @media (min-width:960px) {font-size:30px; }
+
+}
+
 /*
-  Little tag in header.    
-*/  
+  Little tag in header.
+*/
 .alpha-tag {
   background-color:$alpha-colour;
   color:white;
@@ -22,10 +30,12 @@
 }
 #footer {display:none}
 
+$backlog-colour: $purple;
+
 /*
   Top of the page phase banner bits.
 */
-.tag {  
+.tag {
   color:white !important;
   font-weight:700;
   padding:0.25em;
@@ -33,6 +43,7 @@
   text-decoration:none;
   text-transform:uppercase;
 }
+.tag.backlog   {background-color:$backlog-colour}
 .tag.discovery {background-color:$discovery-colour;}
 .tag.alpha     {background-color:$alpha-colour;}
 .tag.beta      {background-color:$beta-colour;}
@@ -46,6 +57,7 @@
 /*
   Convienience classes for colouring text.
 */
+.txt-backlog    {color:$backlog-colour}
 .txt-discovery  {color:$discovery-colour}
 .txt-alpha      {color:$alpha-colour}
 .txt-beta       {color:$beta-colour}
@@ -54,14 +66,15 @@
   Lists of links
 */
 .link-list {
-  border-left:3px solid black;
-  padding:10px;
   font-size:16px;
-  background-color:$highlight-colour;
   margin-bottom:5px;
-  li {margin-bottom:1em;}
+  background-color:$highlight-colour;
+  border-left:3px solid transparent;
+  li {
+    // margin-bottom:1em;
+    padding:10px;
+  }
 }
-
 
 .service-area {
   border-bottom:1px solid $border-colour;
@@ -81,7 +94,7 @@
 .phase-history {
   clear:both;
   margin-top:30px;
-} 
+}
 
 .phase-history-item {
   padding-left:10px;
@@ -96,16 +109,27 @@
   padding:4px 10px 2px;
 }
 
+.border-backlog   {border-color:$backlog-colour;}
 .border-discovery {border-color:$discovery-colour;}
 .border-alpha     {border-color:$alpha-colour;}
 .border-beta      {border-color:$beta-colour;}
 .border-live      {border-color:$live-colour;}
+.border-internal  {border-color:$black;}
 
+.circle.backlog   {background-color:$backlog-colour;}
 .circle.discovery {background-color:$discovery-colour;}
 .circle.alpha     {background-color:$alpha-colour;}
 .circle.beta      {background-color:$beta-colour;}
 .circle.live      {background-color:$live-colour;}
 
+.phase_modifier {
+  font-size:16px;
+  position:absolute;
+  top:24px; left:0;
+  width:100%;
+  text-align:center;
+  color:white;
+}
 .phase-circle {
   width:40%;
   position:relative;
@@ -129,4 +153,12 @@
   border-radius:50% 50%;
   display:inline-block;
   margin:0;
+}
+.column-fifth {
+  box-sizing:border-box;
+  padding:0 15px;
+  @media (min-width: 640px) {
+    float:left;
+    width:20%;
+  }
 }
