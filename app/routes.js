@@ -50,11 +50,10 @@ function indexify(data)
       var piece = _.groupBy(v,'facing');
       new_data[key][k] = piece;
     });
-<<<<<<< HEAD
+
     var phases = _.countBy(req.app.locals.data, 'phase');    
     res.render('index', {"data":newd, "counts":phases, "view":"theme"}); 
-=======
->>>>>>> dwpdigitaltech/master
+
   });
   return new_data;
 }
@@ -78,6 +77,31 @@ router.get('/', function (req, res)
 });
 
 /*
+=======
+  });
+  return new_data;
+}
+
+/*
+  - - - - - - - - - -  INDEX PAGE - - - - - - - - - -
+*/
+router.get('/', function (req, res)
+{
+  var data = _.groupBy(req.app.locals.data, 'theme');
+  var new_data = indexify(data);
+  var phases = _.countBy(req.app.locals.data, 'phase');
+  res.render('index', {
+    "data":new_data,
+    "counts":phases,
+    "view":"theme",
+    "theme_order":theme_order,
+    "phase_order":phase_order
+    }
+  );
+});
+
+/*
+>>>>>>> dwpdigitaltech/master
   - - - - - - - - - -  LOCATION INDEX PAGE - - - - - - - - - -
 */
 router.get('/location/', function (req, res)
@@ -93,6 +117,7 @@ router.get('/location/', function (req, res)
   loc_order.sort();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /*
     - - - - - - - - - -  PROJECT PAGE - - - - - - - - - - 
   */
@@ -103,6 +128,8 @@ router.get('/location/', function (req, res)
 
 
 =======
+=======
+>>>>>>> dwpdigitaltech/master
   var phases = _.countBy(req.app.locals.data, 'phase');
   res.render('index', {
     "data":new_data,
@@ -110,6 +137,9 @@ router.get('/location/', function (req, res)
     "view":"location",
     "theme_order":loc_order,
     "phase_order":phase_order
+<<<<<<< HEAD
+>>>>>>> dwpdigitaltech/master
+=======
 >>>>>>> dwpdigitaltech/master
   });
 });
