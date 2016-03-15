@@ -1,7 +1,6 @@
 var path        = require('path'),
     fs          = require('fs'),
     merge       = require('merge'),
-    csv       = require('csv'),
     express     = require('express'),
     browserSync = require('browser-sync'),
     nunjucks    = require('express-nunjucks'),
