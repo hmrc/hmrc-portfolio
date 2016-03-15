@@ -1,6 +1,7 @@
 var path        = require('path'),
     fs          = require('fs'),
     merge       = require('merge'),
+    csv       = require('csv'),
     express     = require('express'),
     browserSync = require('browser-sync'),
     nunjucks    = require('express-nunjucks'),
@@ -15,21 +16,27 @@ var path        = require('path'),
 /*
   Load all the project data from the files.
 */
-var defaults = JSON.parse(fs.readFileSync(__dirname + '/lib/projects/defaults.js').toString());
-var files = fs.readdirSync(__dirname + '/lib/projects/');
-app.locals.data = [];
-_.each(files,function(el)
-{
-  if (el == 'defaults.js') return;
-  var file = fs.readFileSync(__dirname + '/lib/projects/'+el).toString();
-  try {
-    var json = merge(true,defaults,JSON.parse(file));
-    json.filename = el;
-    app.locals.data.push(json);
-  } catch(err) {
-    console.log(err);
-  }
-});
+
+
+node_xj = require("xls-to-json");
+  node_xj({
+    input: __dirname + '/lib/data.xls',  // input xls 
+    output: __dirname + '/lib/data.json', // output json 
+    sheet: "Sheet1",  // specific sheetname 
+  }, function(err, result) {
+    if(err) {
+      console.error(err);
+    } else {
+      console.log(result);
+    }
+  });
+
+
+
+var defaults = JSON.parse(fs.readFileSync(__dirname + '/lib/data.json').toString());
+app.locals.data = defaults;
+console.log(defaults);
+
 
 // Application settings
 app.set('view engine', 'html');

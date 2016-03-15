@@ -6,32 +6,16 @@ var express = require('express'),
   A way to force the ordering of the themes.
 */
 var theme_order = [
-      'Universal Credit',
-      'Health & Disability',
-      'Working Age',
-      'Retirement Provision',
-      'Fraud & Debt',
+      'Business tax',
+      'Personal tax',
       'Platforms'
     ];
 
-var priority_order = [
-      'Top',
-      'High',
-      'Medium',
-      'Low'
-    ];
-
-var priority_descriptions = {
-      "Top":"Helping people return to work through Universal Credit and solving urgent problems that affect the whole department.",
-      "High":"Helping people prepare for retirement and manage their debt.",
-      "Medium":"Helping people apply for and get existing products across the department.",
-      "Low":"Non-urgent services and those that have short-term benefit."
-    };
 
 /*
   A way to force the ordering of the phases.
 */
-var phase_order = ['backlog','discovery','alpha','beta','live'];
+var phase_order = ['backlog','Discovery','Alpha','Beta', 'Live'];
 
 /*
   A function to gather the data by
@@ -50,10 +34,6 @@ function indexify(data)
       var piece = _.groupBy(v,'facing');
       new_data[key][k] = piece;
     });
-
-    var phases = _.countBy(req.app.locals.data, 'phase');    
-    res.render('index', {"data":newd, "counts":phases, "view":"theme"}); 
-
   });
   return new_data;
 }
@@ -61,7 +41,7 @@ function indexify(data)
 /*
   - - - - - - - - - -  INDEX PAGE - - - - - - - - - -
 */
-router.get('/', function (req, res)
+router.get('/theme', function (req, res)
 {
   var data = _.groupBy(req.app.locals.data, 'theme');
   var new_data = indexify(data);
@@ -77,34 +57,9 @@ router.get('/', function (req, res)
 });
 
 /*
-=======
-  });
-  return new_data;
-}
-
-/*
-  - - - - - - - - - -  INDEX PAGE - - - - - - - - - -
-*/
-router.get('/', function (req, res)
-{
-  var data = _.groupBy(req.app.locals.data, 'theme');
-  var new_data = indexify(data);
-  var phases = _.countBy(req.app.locals.data, 'phase');
-  res.render('index', {
-    "data":new_data,
-    "counts":phases,
-    "view":"theme",
-    "theme_order":theme_order,
-    "phase_order":phase_order
-    }
-  );
-});
-
-/*
->>>>>>> dwpdigitaltech/master
   - - - - - - - - - -  LOCATION INDEX PAGE - - - - - - - - - -
 */
-router.get('/location/', function (req, res)
+router.get('/', function (req, res)
 {
   var data = _.groupBy(req.app.locals.data, 'location');
   var new_data = indexify(data);
@@ -116,16 +71,6 @@ router.get('/location/', function (req, res)
   });
   loc_order.sort();
 
-
-  /*
-    - - - - - - - - - -  PROJECT PAGE - - - - - - - - - - 
-  */
-  router.get('/projects/:id/:slug', function (req, res) 
-  {    
-    var data = _.findWhere(req.app.locals.data, {id:parseInt(req.params.id)});
-    res.render('project', {"data":data});  
-
-
   var phases = _.countBy(req.app.locals.data, 'phase');
   res.render('index', {
     "data":new_data,
@@ -133,38 +78,17 @@ router.get('/location/', function (req, res)
     "view":"location",
     "theme_order":loc_order,
     "phase_order":phase_order
-
   });
 });
 
 
-/*
-  - - - - - - - - - -  INDEX PAGE - - - - - - - - - -
-*/
-router.get('/priority/', function (req, res)
-{
-  var data = _.groupBy(req.app.locals.data, 'priority');
-  var new_data = indexify(data);
-
-  var phases = _.countBy(req.app.locals.data, 'phase');
-
-  res.render('index', {
-    "data":new_data,
-    "counts":phases,
-    "view":"priority",
-    "theme_order":priority_order,
-    "phase_order":phase_order,
-    "priority_descriptions":priority_descriptions
-    }
-  );
-});
 
 /*
   - - - - - - - - - -  PROJECT PAGE - - - - - - - - - -
 */
-router.get('/projects/:id/:slug', function (req, res)
+router.get('/projects/:slug', function (req, res)
 {
-  var data = _.findWhere(req.app.locals.data, {id:parseInt(req.params.id)});
+  var data = _.findWhere(req.app.locals.data);
   res.render('project', {
     "data":data,
     "phase_order":phase_order,

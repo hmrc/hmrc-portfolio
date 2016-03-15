@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block pageTitle %}
-	DWP Digital Portfolio
+	HMRC Digital Portfolio
 {% endblock %}
 
 {% block content %}
@@ -10,9 +10,8 @@
 
 	<p style="margin-top:30px;">
 		These are all the things we're doing 
-		{% if view != 'theme' %}(<a href="/">order by theme</a>){% endif %}
-		{% if view != 'location' %}(<a href="/location/">order by location</a>){% endif %}
-		{% if view != 'priority' %}(<a href="/priority/">order by priority</a>){% endif %}
+		{% if view != 'theme' %}(<a href="/theme">order by theme</a>){% endif %}
+		{% if view != 'location' %}(<a href="/">order by location</a>){% endif %}
 	</p>
 
 	<div class="grid-row">
@@ -22,19 +21,19 @@
 		</section>
 		<section class="column-fifth">
 			<div class="tag discovery">Discovery</div>
-			<div class="big_number txt-discovery">{{ counts.discovery }}</div>
+			<div class="big_number txt-discovery">{{ counts.Discovery }}</div>
 		</section>
 		<section class="column-fifth">
 			<div class="tag alpha">Alpha</div>
-			<div class="big_number txt-alpha">{{ counts.alpha }}</div>
+			<div class="big_number txt-alpha">{{ counts.Alpha }}</div>
 		</section>
 		<section class="column-fifth">
 			<div class="tag beta">Beta</div>
-			<div class="big_number txt-beta">{{ counts.beta }}</div>
+			<div class="big_number txt-beta">{{ counts.Beta }}</div>
 		</section>
 		<section class="column-fifth">
 			<div class="tag live">Live</div>
-			<div class="big_number txt-live">{{ counts.live }}</div>
+			<div class="big_number txt-live">{{ counts.Live }}</div>
 		</section>
 	</div>
 
@@ -78,7 +77,7 @@
 
 	{% endfor %}
 
-	<p style="margin-top: 100px">Last updated 11 Mar 2016. <a href="/about">About the digital portfolio</a><p>
+	<p style="margin-top: 100px">Last updated 11 Mar 2016.<p>
 
 </main>
 
