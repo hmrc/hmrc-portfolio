@@ -109,18 +109,18 @@ $backlog-colour: $purple;
   padding:4px 10px 2px;
 }
 
-.border-backlog   {border-color:$backlog-colour;}
-.border-discovery {border-color:$discovery-colour;}
-.border-alpha     {border-color:$alpha-colour;}
-.border-beta      {border-color:$beta-colour;}
-.border-live      {border-color:$live-colour;}
+.border-Backlog   {border-color:$backlog-colour;}
+.border-Discovery {border-color:$discovery-colour;}
+.border-Alpha     {border-color:$alpha-colour;}
+.border-Beta      {border-color:$beta-colour;}
+.border-Live      {border-color:$live-colour;}
 .border-internal  {border-color:$black;}
 
-.circle.backlog   {background-color:$backlog-colour;}
-.circle.discovery {background-color:$discovery-colour;}
-.circle.alpha     {background-color:$alpha-colour;}
-.circle.beta      {background-color:$beta-colour;}
-.circle.live      {background-color:$live-colour;}
+.circle.Backlog   {background-color:$backlog-colour;}
+.circle.Discovery {background-color:$discovery-colour;}
+.circle.Alpha     {background-color:$alpha-colour;}
+.circle.Beta      {background-color:$beta-colour;}
+.circle.Live      {background-color:$live-colour;}
 
 .phase_modifier {
   font-size:16px;
