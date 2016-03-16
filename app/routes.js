@@ -86,13 +86,16 @@ router.get('/', function (req, res)
 /*
   - - - - - - - - - -  PROJECT PAGE - - - - - - - - - -
 */
-router.get('/projects/:slug', function (req, res)
+router.get('/projects/:id/:slug', function (req, res)
 {
-  var data = _.findWhere(req.app.locals.data);
+  console.log(req.params.id);
+  console.log(req.app.locals.data);
+
+  var data = _.findWhere(req.app.locals.data, {id:(req.params.id)});
   res.render('project', {
-    "data":data,
-    "phase_order":phase_order,
+    "data":data
   });
+
 });
 
 /*
