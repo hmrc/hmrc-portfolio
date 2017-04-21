@@ -5,6 +5,7 @@ var path        = require('path'),
     browserSync = require('browser-sync'),
     nunjucks    = require('express-nunjucks'),
     _           = require('underscore'),
+    moment      = require('moment'),
     routes      = require(__dirname + '/app/routes.js'),
     dis_routes  = require(__dirname + '/app/views/display/routes.js'),
     favicon     = require('serve-favicon'),
@@ -15,27 +16,21 @@ var path        = require('path'),
 /*
   Load all the project data from the files.
 */
-
-
-node_xj = require("xls-to-json");
-  node_xj({
-    input: __dirname + '/lib/data.xls',  // input xls 
-    output: __dirname + '/lib/data.json', // output json 
-    sheet: "Sheet1",  // specific sheetname 
-  }, function(err, result) {
-    if(err) {
-      console.error(err);
-    } else {
-      console.log(result);
-    }
-  });
-
-
-
-var defaults = JSON.parse(fs.readFileSync(__dirname + '/lib/data.json').toString());
-app.locals.data = defaults;
-console.log(defaults);
-
+var defaults = JSON.parse(fs.readFileSync(__dirname + '/lib/projects/defaults.json').toString());
+var files = fs.readdirSync(__dirname + '/lib/projects/');
+app.locals.data = [];
+_.each(files,function(el)
+{
+  if (el == 'defaults.json') return;
+  var file = fs.readFileSync(__dirname + '/lib/projects/'+el).toString();
+  try {
+    var json = merge(true,defaults,JSON.parse(file));
+    json.filename = el;
+    app.locals.data.push(json);
+  } catch(err) {
+    console.log(err);
+  }
+});
 
 // Application settings
 app.set('view engine', 'html');
@@ -53,6 +48,13 @@ nunjucks.setup({
 }, app, function(env) {
   env.addFilter('slugify', function(str) {
       return str.replace(/[.,-\/#!$%\^&\*;:{}=\-_`~()’]/g,"").replace(/ +/g,'_').toLowerCase();
+  });
+  env.addFilter('formatDate', function(str,format) {
+      return moment(str).format(format);
+  });
+  env.addFilter('log', function log(a) {
+    var nunjucksSafe = env.getFilter('safe');
+  	return nunjucksSafe('<script>console.log(' + JSON.stringify(a, null, '\t') + ');</script>');
   });
 });
 

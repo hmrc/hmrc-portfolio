@@ -1,21 +1,39 @@
 var express = require('express'),
     router  = express.Router(),
+    moment  = require('moment'),
+    tog     = require(__dirname + "/../lib/tog.js"),
     _       = require('underscore');
 
 /*
   A way to force the ordering of the themes.
 */
 var theme_order = [
-      'Business tax',
-      'Personal tax',
+      // 'Universal Credit',
+      'Health & Disability',
+      'Working Age',
+      'Retirement Provision',
+      'Fraud & Debt',
       'Platforms'
     ];
 
+var priority_order = [
+      'Top',
+      'High',
+      'Medium',
+      'Low'
+    ];
+
+var priority_descriptions = {
+      "Top":"",
+      "High":"",
+      "Medium":"",
+      "Low":""
+    };
 
 /*
   A way to force the ordering of the phases.
 */
-var phase_order = ['backlog','Discovery','Alpha','Beta', 'Live'];
+var phase_order = ['backlog','discovery','alpha','beta','public beta','live'];
 
 /*
   A function to gather the data by
@@ -41,7 +59,7 @@ function indexify(data)
 /*
   - - - - - - - - - -  INDEX PAGE - - - - - - - - - -
 */
-router.get('/theme', function (req, res)
+router.get('/', function (req, res)
 {
   var data = _.groupBy(req.app.locals.data, 'theme');
   var new_data = indexify(data);
@@ -59,7 +77,7 @@ router.get('/theme', function (req, res)
 /*
   - - - - - - - - - -  LOCATION INDEX PAGE - - - - - - - - - -
 */
-router.get('/', function (req, res)
+router.get('/location/', function (req, res)
 {
   var data = _.groupBy(req.app.locals.data, 'location');
   var new_data = indexify(data);
@@ -82,20 +100,54 @@ router.get('/', function (req, res)
 });
 
 
+/*
+  - - - - - - - - - -  INDEX PAGE - - - - - - - - - -
+*/
+router.get('/priority/', function (req, res)
+{
+  var data = _.groupBy(req.app.locals.data, 'priority');
+  var new_data = indexify(data);
+
+  var phases = _.countBy(req.app.locals.data, 'phase');
+
+  res.render('index', {
+    "data":new_data,
+    "counts":phases,
+    "view":"priority",
+    "theme_order":priority_order,
+    "phase_order":phase_order,
+    "priority_descriptions":priority_descriptions
+    }
+  );
+});
 
 /*
   - - - - - - - - - -  PROJECT PAGE - - - - - - - - - -
 */
 router.get('/projects/:id/:slug', function (req, res)
 {
-  console.log(req.params.id);
-  console.log(req.app.locals.data);
-
-  var data = _.findWhere(req.app.locals.data, {id:(req.params.id)});
+  var data = _.findWhere(req.app.locals.data, {id:parseInt(req.params.id)});
   res.render('project', {
-    "data":data
+    "data":data,
+    "phase_order":phase_order,
   });
+});
 
+/*
+  - - - - - - - - - -  PROTOTYPE REDRIECT - - - - - - - - - -
+*/
+router.get('/projects/:id/:slug/prototype', function (req, res)
+{
+  var id = req.params.id;
+  var data = _.findWhere(req.app.locals.data, {id:parseInt(id)});
+  if (typeof data.prototype == 'undefined')
+  {
+    res.render('no-prototype',{
+      "data":data,
+    });
+  } else {
+    res.redirect(data.prototype);
+  }
 });
 
 /*
@@ -115,5 +167,71 @@ router.get('/api/:id', function (req, res) {
     res.json({error: 'ID not found'});
   }
 });
+
+router.get('/showntells/all/:loc?', function (req, res, next)
+{
+  var loc = req.params.loc;
+
+  var data = [];
+  _.each(req.app.locals.data, function(el)
+  {
+    if (el.showntells)
+    _.each(el.showntells, function(sup)
+    {
+      if (loc && loc !== el.location) {}
+      else {
+        data.push({
+          "name":el.name,
+          "date":moment(sup, "D MMMM YYYY, HH:mm"),
+          "id":el.id,
+          "location":el.location,
+        })
+      }
+    })
+  })
+
+  req.data = req.data || {};
+  req.data.all = true;
+  req.data.loc = loc;
+  req.data.places = _.unique(_.pluck(req.app.locals.data,'location'));
+  req.data.showntells = _.sortBy(data, "date");
+
+  req.url = '/showntells';
+  next();
+  // res.end(tog(newdata))
+});
+
+router.get('/showntells/today/:loc?', function (req, res, next)
+{
+  var loc = req.params.loc;
+  var data = [];
+  _.each(req.app.locals.data, function(el)
+  {
+    if (el.showntells)
+    _.each(el.showntells, function(sup)
+    {
+        supdate = moment(sup, "D MMMM YYYY, HH:mm");
+        if (supdate.isSame(moment(), 'day'))
+        {
+          if (loc && loc !== el.location) {}
+          else {
+            data.push({
+              "name":el.name,
+              "date":supdate,
+              "id":el.id,
+              "location":el.location,
+            })
+          }
+        }
+    })
+  })
+  req.data = req.data || {};
+  req.data.today = true;
+  req.data.loc = loc;
+  req.data.places = _.unique(_.pluck(req.app.locals.data,'location'));
+  req.data.showntells = _.sortBy(data, "date");
+  req.url = '/showntells';
+  next();
+})
 
 module.exports = router;

@@ -1,9 +1,5 @@
 {% extends "layout.html" %}
 
-{% block pageTitle %}
-	GOV.UK prototyping kit
-{% endblock %}
-
 {% block content %}
 
 <main id="content" role="main">
@@ -17,6 +13,12 @@
 
 			<div class="location">Based in <strong>{{ data.location }}</strong></div>
 
+			{% if data.video %}
+			<div style="margin-top:30px;" class="videoWrapper">
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/{{ data.video }}" frameborder="0" allowfullscreen></iframe>
+			</div>
+			{% endif %}
+
 			<h2 class="heading-medium">Project history</h2>
 			<div class="phase-history">
 				{% for phase in phase_order %}
@@ -24,7 +26,12 @@
 					<div class="phase-history-item border-{{phase}} txt-{{phase}}">
 						<h3><a href="#" class="tag tag-history {{phase}}">{{phase}}</a></h3>
 						{% for item in data["phase-history"][phase] %}
-							<p>{{ item.label }} &mdash; {{item.date}}</p>
+							<p>
+								{{ item.label }} &mdash; {{item.date}}
+								{% if item.report %}
+									<br />(<a href="{{ item.report }}">assessment report</a>)
+								{% endif %}
+							</p>
 						{% endfor %}
 					</div>
 					{% endif %}
@@ -41,17 +48,34 @@
 				<p class="circle-label">{{ data.phase | title }}</p>
 			</div>
 
+			{% if data.liveservice %}
+			<br />
+			<p><a href="{{ data.liveservice }}">Live service</a></p>
+			{% endif %}
+			<hr />
+
 			<h3 class="heading-small">Senior Responsible Officer</h3>
 			<p>{{ data.sro | default('Not set') }}</p>
 
 			<h3 class="heading-small">Service Manager</h3>
 			<p>{{ data.service_man | default('Not set') }}</p>
+			
+			<hr />
+			
+			<h3 class="heading-small">Upcoming show &lsquo;n&rsquo; tells</h3>
+			<ul>
+				{% for item in data.showntells %}
+				  <li style="margin-bottom:10px">
+						{{ item | formatDate("h:mma ddd") }} &mdash;
+				  	{{ item | formatDate("Do MMMM") }}
+					</li>
+				{% endfor %}
+				<li></li>
+			</ul>
 
 			<!--<h3 class="heading-small">Prototype Link</h3>
 			<p><a href="{{ data.prototype | default('#') }}">{{ data.prototype | default('http://not.set/') }}</a></p>-->
 
-			<hr />
-			<p>The <a href="https://github.com/dwpdigitaltech/dwp-portfolio/blob/master/lib/projects/{{data.filename}}">content for this page</a> is open source.</p>
 		</section>
 	</div>
 </main>
