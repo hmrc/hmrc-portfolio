@@ -9,11 +9,10 @@ var express = require('express'),
 */
 var theme_order = [
       // 'Universal Credit',
-      'Health & Disability',
-      'Working Age',
-      'Retirement Provision',
-      'Fraud & Debt',
-      'Platforms'
+      'Individuals',
+      'Business',
+      'Charities',
+      'Components'
     ];
 
 var priority_order = [
