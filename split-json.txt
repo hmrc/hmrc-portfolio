@@ -1,0 +1,13 @@
+Post explaining how to split out one file in to multiple https://realguess.net/2014/05/18/split-a-large-json-file-into-smaller-pieces/
+
+Install this https://stedolan.github.io/jq/
+
+Use this to create json from CSV http://www.csvjson.com/csv2json
+
+Run this in terminal
+
+jq -cr 'keys[] as $k | "\($k)\n\(.[$k])"' data.json |
+  while read -r key ; do
+    read -r item
+    printf "%s\n" "$item" > "lib/projects/$key.json"
+  done
