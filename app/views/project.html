@@ -4,80 +4,94 @@
 
 <main id="content" role="main">
 
-	<h1 class="heading-xlarge" style="margin-bottom:15px;">{{ data.name }}</h1>
+    <h1 class="heading-xlarge" style="margin-bottom:15px;">{{ data.name }}</h1>
 
-	<div class="grid-row">
-		<section class="column-two-thirds">
+    <div class="grid-row">
+        <section class="column-two-thirds">
 
-			<p>{{ data.description }}</p>
+            <p>{{ data.description }}</p>
 
-			<div class="location">Based in <strong>{{ data.location }}</strong></div>
+            <div class="location">Based in <strong>{{ data.location }}</strong></div>
 
-			{% if data.video %}
-			<div style="margin-top:30px;" class="videoWrapper">
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/{{ data.video }}" frameborder="0" allowfullscreen></iframe>
-			</div>
-			{% endif %}
+            {% if data.video %}
+            <div style="margin-top:30px;" class="videoWrapper">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ data.video }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            {% endif %}
 
-			<h2 class="heading-medium">Project history</h2>
-			<div class="phase-history">
-				{% for phase in phase_order %}
-					{% if data["phase-history"][phase].length %}
-					<div class="phase-history-item border-{{phase}} txt-{{phase}}">
-						<h3><a href="#" class="tag tag-history {{phase}}">{{phase}}</a></h3>
-						{% for item in data["phase-history"][phase] %}
-							<p>
-								{{ item.label }} &mdash; {{item.date}}
-								{% if item.report %}
-									<br />(<a href="{{ item.report }}">assessment report</a>)
-								{% endif %}
-							</p>
-						{% endfor %}
-					</div>
-					{% endif %}
-				{% endfor %}
-			</div>
-		
+            <h2 class="heading-medium">Project history</h2>
+            <div class="phase-history">
+                {% for phase in phase_order %}
+                    {% if data["phase-history"][phase].length %}
+                    <div class="phase-history-item border-{{phase}} txt-{{phase}}">
+                        <h3><a href="#" class="tag tag-history {{phase}}">{{phase}}</a></h3>
+                        {% for item in data["phase-history"][phase] %}
+                            <p>
+                                {{ item.label }} &mdash; {{item.date}}
+                                {% if item.report %}
+                                    <br />(<a href="{{ item.report }}">assessment report</a>)
+                                {% endif %}
+                            </p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <h2 class="heading-medium">Users in the last 3 months</h2>
+            <p><strong>{{ data.users }}</strong></p>
+        
 
-		</section>
-		<section class="column-third">
+        </section>
+        <section class="column-third">
 
-			<div class="phase-circle">
-				<p class="circle {{ data.phase | lower }}"></p>
-				{% if data.phase_modifier %}<p class="phase_modifier">{{ data.phase_modifier }}</p>{% endif %}
-				<p class="circle-label">{{ data.phase | title }}</p>
-			</div>
+            <div class="phase-circle">
+                <p class="circle {{ data.phase | lower }}"></p>
+                {% if data.phase_modifier %}<p class="phase_modifier">{{ data.phase_modifier }}</p>{% endif %}
+                <p class="circle-label">{{ data.phase | title }}</p>
+            </div>
 
-			{% if data.liveservice %}
-			<br />
-			<p><a href="{{ data.liveservice }}">Live service</a></p>
-			{% endif %}
-			<hr />
+            {% if data.liveservice %}
+            <br />
+            <p><a href="{{ data.liveservice }}">Live service</a></p>
+            {% endif %}
+            <hr />
 
-			<h3 class="heading-small">Senior Responsible Officer</h3>
-			<p>{{ data.sro | default('Not set') }}</p>
+            <!--<h3 class="heading-small">Senior Responsible Officer</h3>
+            <p>{{ data.sro | default('Not set') }}</p>-->
 
-			<h3 class="heading-small">Service Manager</h3>
-			<p>{{ data.service_man | default('Not set') }}</p>
-			
-			<hr />
-			
-			<h3 class="heading-small">Upcoming show &lsquo;n&rsquo; tells</h3>
-			<ul>
-				{% for item in data.showntells %}
-				  <li style="margin-bottom:10px">
-						{{ item | formatDate("h:mma ddd") }} &mdash;
-				  	{{ item | formatDate("Do MMMM") }}
-					</li>
-				{% endfor %}
-				<li></li>
-			</ul>
+            <h3 class="heading-small">Product Manager</h3>
+            <p>{{ data.product_manager | default('Not set') }}</p>
 
-			<!--<h3 class="heading-small">Prototype Link</h3>
-			<p><a href="{{ data.prototype | default('#') }}">{{ data.prototype | default('http://not.set/') }}</a></p>-->
+            <h3 class="heading-small">Interaction Designer</h3>
+            <p>{{ data.interation_designer | default('Not set') }}</p>
 
-		</section>
-	</div>
+            <h3 class="heading-small">User Researcher</h3>
+            <p>{{ data.user_researcher | default('Not set') }}</p>
+
+            <h3 class="heading-small">Content Designer</h3>
+            <p>{{ data.content_designer | default('Not set') }}</p>
+
+            <h3 class="heading-small">Digital Service Manager</h3>
+            <p>{{ data.digital_service_manager | default('Not set') }}</p>
+            
+            <hr />
+            
+            <!--<h3 class="heading-small">Upcoming show &lsquo;n&rsquo; tells</h3>
+            <ul>
+                {% for item in data.showntells %}
+                  <li style="margin-bottom:10px">
+                        {{ item | formatDate("h:mma ddd") }} &mdash;
+                      {{ item | formatDate("Do MMMM") }}
+                    </li>
+                {% endfor %}
+                <li></li>
+            </ul>-->
+
+            <!--<h3 class="heading-small">Prototype Link</h3>
+            <p><a href="{{ data.prototype | default('#') }}">{{ data.prototype | default('http://not.set/') }}</a></p>-->
+
+        </section>
+    </div>
 </main>
 
 {% endblock %}
