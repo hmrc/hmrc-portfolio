@@ -112,7 +112,7 @@ $backlog-colour: $purple;
 .border-discovery {border-color:$discovery-colour;}
 .border-alpha     {border-color:$alpha-colour;}
 .border-beta      {border-color:$beta-colour;}
-.border-public    {border-color:$beta-colour;}
+.border-public-beta    {border-color:$beta-colour;}
 .border-live      {border-color:$live-colour;}
 .border-internal  {border-color:$black;}
 
@@ -164,17 +164,17 @@ $backlog-colour: $purple;
 }
 
 .videoWrapper {
-	position: relative;
-	padding-bottom: 51%;
-	padding-top: 25px;
-	height: 0;
+    position: relative;
+    padding-bottom: 51%;
+    padding-top: 25px;
+    height: 0;
 }
 .videoWrapper iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 /* OTHER PROJECTS STUFF */
