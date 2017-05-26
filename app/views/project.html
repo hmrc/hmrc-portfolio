@@ -1,6 +1,4 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 
 <main id="content" role="main">
 
@@ -8,45 +6,48 @@
 
     <div class="grid-row">
         <section class="column-two-thirds">
+            <p>Short name: {{ data.short_name }}</p>
+            <div class="location">Based in <strong>{{ data.location }}</strong></div>
+            <br><br>
 
             <p>{{ data.description }}</p>
 
-            <div class="location">Based in <strong>{{ data.location }}</strong></div>
-
-            {% if data.video %}
+            <!--{% if data.video %}
             <div style="margin-top:30px;" class="videoWrapper">
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ data.video }}" frameborder="0" allowfullscreen></iframe>
             </div>
-            {% endif %}
+            {% endif %}-->
+
+            <h2 class="heading-medium">Screens for this service</h2>
+            <a href="{{ data.Screenshots_of_this_service }}">View screens</a>
+
+            <h2 class="heading-medium">User sessions in the last 90 days</h2>
+            <p>{{ data.users_sessions_last_90_days }}</p>
+
+            <h2 class="heading-medium">Top landing page according to Google Analytics</h2>
+            <a href="{{ data.service_url }}">{{ data.service_url }}</a>
 
             <h2 class="heading-medium">Project history</h2>
             <div class="phase-history">
-                {% for phase in phase_order %}
-                    {% if data["phase-history"][phase].length %}
-                    <div class="phase-history-item border-{{phase}} txt-{{phase}}">
-                        <h3><a href="#" class="tag tag-history {{phase}}">{{phase}}</a></h3>
-                        {% for item in data["phase-history"][phase] %}
-                            <p>
-                                {{ item.label }} &mdash; {{item.date}}
-                                {% if item.report %}
-                                    <br />(<a href="{{ item.report }}">assessment report</a>)
-                                {% endif %}
-                            </p>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                {% endfor %}
+                {% for phase in phase_order %} {% if data["phase-history"][phase].length %}
+                <div class="phase-history-item border-{{phase}} txt-{{phase}}">
+                    <h3><a href="#" class="tag tag-history {{phase}}">{{phase}}</a></h3>
+                    {% for item in data["phase-history"][phase] %}
+                    <p>
+                        {{ item.label }} &mdash; {{item.date}} {% if item.report %}
+                        <br />(<a href="{{ item.report }}">assessment report</a>) {% endif %}
+                    </p>
+                    {% endfor %}
+                </div>
+                {% endif %} {% endfor %}
             </div>
-            <h2 class="heading-medium">Users in the last 3 months</h2>
-            <p><strong>{{ data.users }}</strong></p>
-        
-
         </section>
         <section class="column-third">
 
             <div class="phase-circle">
                 <p class="circle {{ data.phase | lower }}"></p>
-                {% if data.phase_modifier %}<p class="phase_modifier">{{ data.phase_modifier }}</p>{% endif %}
+                {% if data.phase_modifier %}
+                <p class="phase_modifier">{{ data.phase_modifier }}</p>{% endif %}
                 <p class="circle-label">{{ data.phase | title }}</p>
             </div>
 
@@ -73,9 +74,9 @@
 
             <h3 class="heading-small">Digital Service Manager</h3>
             <p>{{ data.digital_service_manager | default('Not set') }}</p>
-            
+
             <hr />
-            
+
             <!--<h3 class="heading-small">Upcoming show &lsquo;n&rsquo; tells</h3>
             <ul>
                 {% for item in data.showntells %}
